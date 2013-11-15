@@ -2,11 +2,9 @@
 }.each do |fact, pattern|
     Facter.add(fact) do
         setcode do
-            unless defined?(@@nginxversion)
-                @@nginxversion = Facter::Util::Resolution.exec('nginx -v 2>&1')
-            end
+            ver = Facter::Util::Resolution.exec('nginx -v 2>&1')
 
-            if pattern.match(@@nginxversion)
+            if pattern.match(ver)
                 $1
             else
                 nil
